@@ -11,6 +11,7 @@ djoser = "*"
 djangorestframework-simplejwt = "*"
 drf-yasg = "*"
 python-dotenv = "*"
+uwsgi = "*"
 
 [requires]
 python_version = "3.8"

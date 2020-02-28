@@ -14,14 +14,14 @@ def db_provider():
         return {
             'default': {
                 'ENGINE': 'django.db.backends.postgresql',
-                'NAME': os.getenv('POSTGRES_DB', 'vacation_visualiser'),
-                'USER': os.getenv('POSTGRES_USER', 'vacation_visualiser'),
+                'NAME': os.getenv('DB_NAME', 'drone_auth'),
+                'USER': os.getenv('DB_USER', 'drone_auth'),
                 'PASSWORD': os.getenv(
-                    'POSTGRES_PASSWORD',
-                    'vacation_visualiser'
+                    'DB_PASSWORD',
+                    'drone_auth'
                 ),
-                'HOST': os.getenv('POSTGRES_HOST', 'postgres'),
-                'PORT': os.getenv('POSTGRES_PORT', '5432'),
+                'HOST': os.getenv('DB_HOST', 'localhost'),
+                'PORT': os.getenv('DB_PORT', '5432'),
             },
         }
     elif db_backend == 'sqlite3':
