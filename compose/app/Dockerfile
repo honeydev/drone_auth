@@ -22,7 +22,8 @@ ENV BUILD_PACKAGES \
     libc-dev \
     musl-dev \
     jpeg-dev \
-    zlib-dev
+    zlib-dev \
+    yarn
 
 RUN mkdir $PROJECT_ROOT/ && \
     mkdir $PROJECT_ROOT/run && \
@@ -34,10 +35,15 @@ WORKDIR $PROJECT_ROOT
 RUN pip install --upgrade wheel pip pipenv \
     && apk --no-cache add --virtual build-deps $BUILD_PACKAGES \
     && apk --no-cache add $RUNTIME_PACKAGES \
-    && set -ex && pipenv install --deploy --system --dev \
-    && apk del build-deps
+    && set -ex && pipenv install --deploy --system --dev
 
 COPY . $PROJECT_ROOT
+
+WORKDIR $PROJECT_ROOT/frontend
+RUN yarn build --mode production
+WORKDIR $PROJECT_ROOT
+
+RUN apk del build-deps
 
 COPY ./compose/app/start_uwsgi $USR_LOCAL_BIN/
 
