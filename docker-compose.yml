@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./compose/app/Dockerfile
+    depends_on:
+      - postgres
+    links:
+      - postgres
+    volumes:
+      - ./var/static/:/app/var/static/
+      - ./var/media/:/app/var/media/
+    environment:
+      DJANGO_SETTINGS_MODULE: drone_auth.settings
+
+
+  nginx:
+    build:
+      context: .
+      dockerfile: ./compose/nginx/Dockerfile
+    depends_on:
+      - app
+    links:
+      - app
+    volumes:
+      - ./var/static/:/opt/app/static/:ro
+      - ./var/media/:/opt/app/media/:ro
+    ports:
+      - 80:80
+
+  postgres:
+    image: postgres:12
+    ports:
+      - 5432:5432
+    volumes:
+      - ./var/postgresql-data/:/var/lib/postgresql/data/
+    environment:
+      POSTGRES_DB: drone_auth
+      POSTGRES_USER: drone_auth
+      POSTGRES_PASSWORD: drone_auth
