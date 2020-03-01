@@ -43,9 +43,6 @@ export default {
         this.$store
       );
       router.push('home');
-    },
-    errorLoginForm(response) {
-      console.log(response);
     }
   }
 };

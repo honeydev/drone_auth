@@ -6,17 +6,13 @@ const sendLoginForm = async (cmp, formData) => {
     cmp.successLoginForm(response);
   } catch (error) {
     cmp.errorLoginForm(error.response);
-    console.log(error);
   }
 };
 
 const sendRegisterForm = async (cmp, formData) => {
-  try {
-    const response = await Axios.post('/auth/users/', formData);
-    cmp.successRegisterForm(response);
-  } catch (error) {
-    console.log(error);
-  }
+  const response = await Axios.post('/auth/users/', formData);
+  cmp.successRegisterForm(response);
+  return response;
 };
 
 export { sendLoginForm, sendRegisterForm };

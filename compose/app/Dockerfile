@@ -37,11 +37,13 @@ RUN pip install --upgrade wheel pip pipenv \
     && apk --no-cache add $RUNTIME_PACKAGES \
     && set -ex && pipenv install --deploy --system --dev
 
-COPY . $PROJECT_ROOT
+COPY ./frontend $PROJECT_ROOT/frontend
 
 WORKDIR $PROJECT_ROOT/frontend
 RUN yarn build --mode production
 WORKDIR $PROJECT_ROOT
+
+COPY . $PROJECT_ROOT
 
 RUN apk del build-deps
 
