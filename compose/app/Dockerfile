@@ -40,7 +40,10 @@ RUN pip install --upgrade wheel pip pipenv \
 COPY ./frontend $PROJECT_ROOT/frontend
 
 WORKDIR $PROJECT_ROOT/frontend
+
+RUN yarn install
 RUN yarn build --mode production
+
 WORKDIR $PROJECT_ROOT
 
 COPY . $PROJECT_ROOT
