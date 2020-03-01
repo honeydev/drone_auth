@@ -13,13 +13,17 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf import settings
 from django.conf.urls import url
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
+
+from drone_auth.views import index
 
 
 schema_view = get_schema_view(
@@ -32,6 +36,7 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
+    url(r'^$', index, name='index'),
     path('admin/', admin.site.urls),
     url(r'^auth/', include('djoser.urls')),
     url(r'^auth/', include('djoser.urls.jwt')),
@@ -41,3 +46,11 @@ urlpatterns = [
         name='schema-swagger-ui',
     ),
 ]
+
+if settings.DEBUG:
+    urlpatterns.extend(
+        static(
+            settings.STATIC_URL,
+            document_root=settings.STATIC_ROOT
+        )
+    )
