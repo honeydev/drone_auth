@@ -1,18 +1,25 @@
 import Axios from 'axios';
+import { catchAxiosException } from '../helpers/commonHelpers';
 
 const sendLoginForm = async (cmp, formData) => {
   try {
     const response = await Axios.post('/auth/jwt/create/', formData);
     cmp.successLoginForm(response);
   } catch (error) {
-    cmp.errorLoginForm(error.response);
+    catchAxiosException(error, () => cmp.errorLoginForm(error.response));
   }
 };
 
 const sendRegisterForm = async (cmp, formData) => {
-  const response = await Axios.post('/auth/users/', formData);
-  cmp.successRegisterForm(response);
-  return response;
+  try {
+    const response = await Axios.post('/auth/users/', formData);
+    cmp.handleSuccessRegisterForm(response);
+    return response;
+  } catch (error) {
+    catchAxiosException(error, () =>
+      cmp.hadnlerErrorRegisterForm(error.response)
+    );
+  }
 };
 
 export { sendLoginForm, sendRegisterForm };

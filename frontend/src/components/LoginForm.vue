@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Errors v-bind:errors="errors" />
     <md-field md-clearable>
       <label>Username</label>
       <md-input v-model="username"></md-input>
@@ -17,13 +18,18 @@
 <script>
 import { sendLoginForm } from '../api/auth';
 import router from '../router/index';
-import { setAuntState } from '../helpers/commonHelpers';
+import { setAuntState, formatFormErrors } from '../helpers/commonHelpers';
+import Errors from './Errors';
 
 export default {
+  components: {
+    Errors
+  },
   data() {
     return {
       username: null,
-      password: null
+      password: null,
+      errors: []
     };
   },
   name: 'LoginForm',
@@ -43,6 +49,9 @@ export default {
         this.$store
       );
       router.push('home');
+    },
+    errorLoginForm(response) {
+      this.errors = formatFormErrors(response.data);
     }
   }
 };

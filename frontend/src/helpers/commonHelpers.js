@@ -19,4 +19,21 @@ const removeAuthState = store => {
   store.commit('switchAuth');
 };
 
-export { isAuthTokenCookie, setAuntState, removeAuthState };
+const formatFormErrors = responseData =>
+  Object.keys(responseData).map(key => `${key}: ${responseData[key]}`);
+
+const catchAxiosException = (error, handler) => {
+  if (error.isAxiosError) {
+    handler();
+  } else {
+    throw error;
+  }
+};
+
+export {
+  isAuthTokenCookie,
+  setAuntState,
+  removeAuthState,
+  formatFormErrors,
+  catchAxiosException
+};

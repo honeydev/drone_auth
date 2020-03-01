@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Errors v-bind:errors="errors" />
     <md-field>
       <label for="email">Email</label>
       <md-input v-model="email" id="email" type="email" name="email" />
@@ -28,28 +29,39 @@
 
 <script>
 import { sendRegisterForm } from '../api/auth';
+import { formatFormErrors } from '../helpers/commonHelpers';
 import router from '../router/index';
+import Errors from './Errors';
 
 export default {
   name: 'RegisterForm',
+  components: { Errors },
   data() {
     return {
       email: null,
       username: null,
       password: null,
-      passwordConfirmation: null
+      passwordConfirmation: null,
+      errors: []
     };
   },
   methods: {
     tryRegister() {
-      sendRegisterForm(this, {
-        email: this.email,
-        username: this.username,
-        password: this.password
-      });
+      if (this.password !== this.passwordConfirmation) {
+        this.errors = ['Password and password confirmation fields not equals'];
+      } else {
+        sendRegisterForm(this, {
+          email: this.email,
+          username: this.username,
+          password: this.password
+        });
+      }
     },
-    successRegisterForm() {
+    handleSuccessRegisterForm() {
       router.push('login');
+    },
+    hadnlerErrorRegisterForm(response) {
+      this.errors = formatFormErrors(response.data);
     }
   }
 };
