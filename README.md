@@ -1,7 +1,7 @@
 *Commands:*
 * make lint - run linters
 * make install - run install project deps for local dev
-* docker-compose up -- run production ready build
+* docker-compose up - run production ready build
 
 *Demo:*
 * http://23.95.214.201/ - start page
