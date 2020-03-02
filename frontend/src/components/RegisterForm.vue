@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Notice v-if="afterRegMessage" v-bind:message="afterRegMessage" />
     <Errors v-bind:errors="errors" />
     <md-field>
       <label for="email">Email</label>
@@ -32,17 +33,19 @@ import { sendRegisterForm } from '../api/auth';
 import { formatFormErrors } from '../helpers/commonHelpers';
 import router from '../router/index';
 import Errors from './Errors';
+import Notice from "./Notice";
 
 export default {
   name: 'RegisterForm',
-  components: { Errors },
+  components: {Notice, Errors },
   data() {
     return {
-      email: null,
-      username: null,
-      password: null,
-      passwordConfirmation: null,
-      errors: []
+      email: '',
+      username: '',
+      password: '',
+      passwordConfirmation: '',
+      errors: [],
+      afterRegMessage: ``
     };
   },
   methods: {
@@ -58,7 +61,9 @@ export default {
       }
     },
     handleSuccessRegisterForm() {
-      router.push('login');
+      this.afterRegMessage = `your account will be available after
+      confirmation by the administrator`;
+      setTimeout(() => router.push('login'), 2000);
     },
     hadnleErrorRegisterForm(response) {
       this.errors = formatFormErrors(response.data);
