@@ -33,11 +33,11 @@ import { sendRegisterForm } from '../api/auth';
 import { formatFormErrors } from '../helpers/commonHelpers';
 import router from '../router/index';
 import Errors from './Errors';
-import Notice from "./Notice";
+import Notice from './Notice';
 
 export default {
   name: 'RegisterForm',
-  components: {Notice, Errors },
+  components: { Notice, Errors },
   data() {
     return {
       email: '',
@@ -45,7 +45,7 @@ export default {
       password: '',
       passwordConfirmation: '',
       errors: [],
-      afterRegMessage: ``
+      afterRegMessage: ''
     };
   },
   methods: {
