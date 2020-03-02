@@ -15,17 +15,9 @@
 
 <script>
 import router from './router/index';
-// import Nav from './components/Nav';
 import { removeAuthState } from './helpers/commonHelpers';
 
 export default {
-  created() {
-    if (this.isAuth) {
-      router.push('home');
-    } else {
-      router.push('login');
-    }
-  },
   computed: {
     isAuth() {
       return this.$store.state.auth;
