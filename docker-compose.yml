@@ -15,7 +15,6 @@ services:
     environment:
       DJANGO_SETTINGS_MODULE: drone_auth.settings
 
-
   nginx:
     build:
       context: .

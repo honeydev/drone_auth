@@ -17,7 +17,7 @@ const sendRegisterForm = async (cmp, formData) => {
     return response;
   } catch (error) {
     catchAxiosException(error, () =>
-      cmp.hadnlerErrorRegisterForm(error.response)
+      cmp.hadnleErrorRegisterForm(error.response)
     );
   }
 };

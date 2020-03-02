@@ -9,12 +9,12 @@ https://docs.djangoproject.com/en/3.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
-
 import os
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 from datetime import timedelta
+
 from dotenv import load_dotenv
+
 from drone_auth.providers import db_provider
 
 load_dotenv()
@@ -56,10 +56,10 @@ INSTALLED_APPS = (
 SIMPLE_JWT = {
     'AUTH_HEADER_TYPES': ('JWT',),
     'ACCESS_TOKEN_LIFETIME': timedelta(
-        hours=os.getenv('AUTH_TOKEN_LIFETIME_IN_HOURS', 3)
+        hours=os.getenv('AUTH_TOKEN_LIFETIME_IN_HOURS', 3),
     ),
     'REFRESH_TOKEN_LIFETIME': timedelta(
-        hours=os.getenv('REFRESH_TOKEN_LIFETIME_IN_HOURS', 6)
+        hours=os.getenv('REFRESH_TOKEN_LIFETIME_IN_HOURS', 6),
     ),
 }
 
@@ -78,6 +78,16 @@ SWAGGER_SETTINGS = {
         },
     },
     'DOC_EXPANSION': 'none',
+}
+
+DJOSER = {
+    'CREATE_NOT_ACTIVE_USERS': True,
+    'PERMISSIONS': {
+        'user_list': ['djoser.permissions.CurrentUserOrAdmin'],
+    },
+    'SERIALIZERS': {
+        'user_create': 'drone_auth.serializers.CreateNotActiveUserSerializer',
+    },
 }
 
 MIDDLEWARE = (
@@ -125,22 +135,22 @@ AUTH_PASSWORD_VALIDATORS = (
         'NAME': (
             'django.contrib.auth.password_validation.UserAttribute'
             'SimilarityValidator'
-        )
+        ),
     },
     {
         'NAME': (
             'django.contrib.auth.password_validation.MinimumLengthValidator'
-        )
+        ),
     },
     {
         'NAME': (
             'django.contrib.auth.password_validation.CommonPasswordValidator'
-        )
+        ),
     },
     {
         'NAME': (
             'django.contrib.auth.password_validation.NumericPasswordValidator'
-        )
+        ),
     },
 )
 
@@ -164,8 +174,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = f'{BASE_DIR}/var/static'
+STATIC_ROOT = os.path.join(BASE_DIR, 'var', 'static')
 
 STATICFILES_DIRS = (
-  f'{BASE_DIR}/frontend/dist',
+    os.path.join(BASE_DIR, 'frontend', 'dist'),
 )

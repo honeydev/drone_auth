@@ -1,13 +1,18 @@
 # main project dependencies providers module
 
 import os
+from typing import Dict
 
 from django.conf import settings
 
 
-def db_provider():
-    """Provide database backend."""
+def db_provider() -> Dict[str, Dict[str, str]]:
+    """
+    Provide database backend.
 
+    Raises:
+         ValueError: if database backend not supported
+    """
     db_backend = os.getenv('DB_BACKEND', 'sqlite3').lower().strip()
 
     if db_backend == 'pg':
@@ -18,7 +23,7 @@ def db_provider():
                 'USER': os.getenv('DB_USER', 'drone_auth'),
                 'PASSWORD': os.getenv(
                     'DB_PASSWORD',
-                    'drone_auth'
+                    'drone_auth',
                 ),
                 'HOST': os.getenv('DB_HOST', 'localhost'),
                 'PORT': os.getenv('DB_PORT', '5432'),
@@ -30,9 +35,9 @@ def db_provider():
                 'ENGINE': 'django.db.backends.sqlite3',
                 'NAME': os.path.join(
                     settings.BASE_DIR,
-                    os.getenv('DB_NAME', 'db.sqlite3')
+                    os.getenv('DB_NAME', 'db.sqlite3'),
                 ),
-            }
+            },
         }
 
     raise ValueError(f'Invalid db backend {db_backend}')

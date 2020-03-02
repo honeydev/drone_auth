@@ -60,7 +60,7 @@ export default {
     handleSuccessRegisterForm() {
       router.push('login');
     },
-    hadnlerErrorRegisterForm(response) {
+    hadnleErrorRegisterForm(response) {
       this.errors = formatFormErrors(response.data);
     }
   }
