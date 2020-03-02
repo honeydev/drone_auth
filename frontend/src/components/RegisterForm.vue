@@ -63,7 +63,7 @@ export default {
     handleSuccessRegisterForm() {
       this.afterRegMessage = `your account will be available after
       confirmation by the administrator`;
-      setTimeout(() => router.push('login'), 2000);
+      setTimeout(() => router.push('login'), 4000);
     },
     hadnleErrorRegisterForm(response) {
       this.errors = formatFormErrors(response.data);
