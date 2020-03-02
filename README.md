@@ -10,3 +10,6 @@
     * Test admin user
         * username: test
         * password: test
+
+** After registration new user should be approved (mark as active) by administrator 
+in django admin panel
